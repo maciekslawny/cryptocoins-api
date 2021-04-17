@@ -38,6 +38,7 @@
                     <th>Coin name</th>
                     <th>Current price</th>
                     <th>Change 24H</th>
+                    <th></th>
                     
                 </tr>
             </thead>
@@ -45,10 +46,12 @@
             <tbody>
                 {% for coin in coins_data %}    
                 <tr>
-                    <th><img src="{{coin[3]}}" style="width: 25px; height: 25px; background-size: cover"><span class="p-3">{{coin[0]}}</span></th>
-                    <th class='text-muted'>{{coin[1]}} $</th> 
-                    {% if (coin[2]>0) %}<th class='text-success'>{{coin[2]}} %</th>
-                    {% else %}<th class='text-danger'>{{coin[2]}} %</th>{% endif %}
+                    <th><img src="{{coin[4]}}" style="width: 25px; height: 25px; background-size: cover"><span class="p-3">{{coin[0]}}</span></th>
+                    <th class='text-muted'>{{coin[2]}} $</th> 
+                    {% if (coin[3]>-0.01) %}<th class='text-success'>{{coin[3]}} %</th>
+                    {% else %}<th class='text-danger'>{{coin[3]}} %</th>{% endif %}
+                    <th><a href="/{{coin[1]}}" class="btn btn-sm btn-outline-primary">View</a></th>
+                    
                 </tr>
                 {% endfor %}  
 
@@ -57,15 +60,15 @@
 
         
         <div class="row">
-
+            <h2 class='text-center p-2 text-uppercase fw-bold font-monospace'>Top 3 Coins:</h2>
             {% for x in range(3) %}
 
             <div class="col-sm-4 mb-2">
                 <div class="card bg-light shadow">
                   <div class="card-body">
                     <h5 class="card-title">{{coins_data[x][0]}}</h5>
-                    <p class="card-text">{{coins_data[x][6][0:200]|safe}}...</p>
-                    <a href="#" class="btn btn-primary">Check {{coins_data[x][0]}}</a>
+                    <p class="card-text">{{coins_data[x][7][0:200]|safe}}...</p>
+                    <a href="/{{coins_data[x][1]}}" class="btn btn-primary">Check {{coins_data[x][0]}}</a>
                   </div>
                 </div>
               </div>
