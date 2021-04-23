@@ -1,9 +1,15 @@
 from json import loads
 from requests import get
+import threading
 
-AMOUNT_OF_COINS = 25
-url = f'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page={AMOUNT_OF_COINS}&page=1&sparkline=false'
-all_coins_data = loads(get(url).text)
+AMOUNT_OF_COINS = 25 
+
+def load_api(): 
+    threading.Timer(60.0, load_api).start() # called every minute
+    global url, all_coins_data 
+    url = f'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page={AMOUNT_OF_COINS}&page=1&sparkline=false'
+    all_coins_data = loads(get(url).text)
+
 
 
 
@@ -26,8 +32,3 @@ def create_coin(coin_input):
                 opis = loads(get(coin_url).text)['description']['en']
                 coin_info = [coin['name'], coin['id'], coin['current_price'], round(coin['price_change_percentage_24h'], 1), coin['image'], coin['ath'], coin['ath_date'], opis]
                 return coin_info
-
-
-
-
-
